@@ -1,169 +1,106 @@
 "use client";
 
-import Image from "next/image";
-import Link from "next/link";
 import { motion } from "framer-motion";
-import { personalInfo, skills, timeline } from "@/lib/data";
-import { Card } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import SectionReveal from "@/components/animations/SectionReveal";
 import { SectionHeading } from "@/components/shared/SectionHeading";
+import { CTA } from "@/components/home/CTA";
+import { Handshake, Scale, TrendingUp, Shield, Activity, Lightbulb } from "lucide-react";
 
-import { SectionBackground } from "@/components/animations/premium/SectionBackground";
+const coreValues = [
+  {
+    icon: <Handshake className="w-6 h-6" />,
+    title: "Business-First Thinking",
+    description: "I don't sell AI for the sake of AI. If a simple spreadsheet solves your problem better than a complex neural network, I will build the spreadsheet. The goal is ROI, not novelty."
+  },
+  {
+    icon: <Shield className="w-6 h-6" />,
+    title: "Transparency",
+    description: "I clearly communicate what automation can do, what it can't do, and how long it will take. No exaggerated claims or hidden technical debt."
+  },
+  {
+    icon: <Activity className="w-6 h-6" />,
+    title: "Long-Term Partnerships",
+    description: "I don't just hand over a piece of software and disappear. I build robust systems and provide ongoing support to ensure they evolve as your business grows."
+  },
+  {
+    icon: <TrendingUp className="w-6 h-6" />,
+    title: "Continuous Improvement",
+    description: "Automation is not a set-and-forget project. I proactively monitor system performance and refine AI prompts to continuously improve accuracy and efficiency."
+  },
+  {
+    icon: <Scale className="w-6 h-6" />,
+    title: "Scalable Systems",
+    description: "Every architecture is built with scale in mind. The workflow that handles 50 leads today should seamlessly handle 500 leads tomorrow without breaking."
+  },
+  {
+    icon: <Lightbulb className="w-6 h-6" />,
+    title: "Ethical AI Implementation",
+    description: "I prioritize data privacy, secure integrations, and clear human-handoff protocols to ensure your AI represents your brand responsibly."
+  }
+];
 
 export default function AboutPage() {
   return (
-    <div className="premium-section min-h-screen relative overflow-hidden">
-      <SectionBackground />
-      
-      <section className="container mx-auto space-y-20 px-4 py-16 sm:space-y-32 md:py-24">
-        {/* Profile Header */}
-        <div className="flex flex-col items-center text-center">
-          <motion.div 
-            initial={{ opacity: 0, scale: 0.8 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-            className="relative h-44 w-44 sm:h-56 sm:w-56"
-          >
-            {/* Pulsing outer rings */}
-            <div className="absolute inset-[-20px] rounded-full bg-[radial-gradient(circle,rgba(212,175,55,0.15)_0%,transparent_70%)] animate-pulse" />
-            <div className="absolute inset-[-10px] border border-[#d4af37]/20 rounded-full animate-[spin_10s_linear_infinite]" />
-            
-            {/* Main Avatar Container */}
-            <div className="absolute inset-0 rounded-full p-[4px] bg-linear-to-br from-[#d4af37] via-[#d4af37]/30 to-[#d4af37] shadow-[0_0_50px_rgba(212,175,55,0.25)]">
-              <div className="relative h-full w-full rounded-full overflow-hidden border-4 border-[#0d0d0d] bg-[#0d0d0d]">
-                <Image
-                  src="/kumail-profile.jpg"
-                  alt="Kumail Kmr"
-                  fill
-                  className="object-cover object-top hover:scale-110 transition-transform duration-700"
-                  priority
-                />
-              </div>
-            </div>
-          </motion.div>
+    <>
+      <main className="bg-white dark:bg-[#0a0a0a] min-h-screen">
+        <section className="section-py section-container pt-32 max-w-4xl">
+          <SectionHeading
+            badge="About Me"
+            title="I Transform Business Operations"
+            subtitle="I'm Kumail Kmr, an AI Automation & Business Systems Specialist dedicated to helping founders reclaim their time."
+            center
+          />
 
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.2, duration: 0.6 }}
-            className="mt-10 space-y-4"
-          >
-            <h1 className="text-[3rem] font-bold leading-tight tracking-tight sm:text-[4rem] md:text-6xl lg:text-7xl">
-              <span className="gradient-text italic">Kumail Kmr</span>
-            </h1>
-            <p className="mx-auto max-w-2xl text-lg font-light text-slate-400 sm:text-xl leading-relaxed">
-              {personalInfo.role}
+          <div className="mt-16 text-lg text-[#71717a] leading-relaxed space-y-6">
+            <p>
+              Many businesses struggle not because they lack demand, but because their 
+              <span className="text-[#09090b] dark:text-white font-medium"> internal operations are breaking under the weight of manual, repetitive work</span>. 
+              Founders find themselves spending hours answering the same WhatsApp queries, chasing clients for documents, and managing data entry instead of focusing on growth.
             </p>
-            <div className="flex items-center justify-center gap-2 text-sm font-bold tracking-[0.2em] uppercase text-[#d4af37]/80">
-              <span>📍 Srinagar</span>
-              <span className="text-white/20">•</span>
-              <span>Kashmir</span>
-              <span className="text-white/20">•</span>
-              <span>India 🏔️</span>
-            </div>
-            
-            <div className="pt-6">
-              <Link href={personalInfo.whatsappUrl} target="_blank">
-                <Button className="h-14 px-10 text-base font-bold shadow-[0_10px_40px_rgba(212,175,55,0.2)]">
-                  Start a Project
-                </Button>
-              </Link>
-            </div>
-          </motion.div>
-        </div>
-
-        {/* Story Section */}
-        <div className="grid gap-10 lg:grid-cols-5 items-start">
-          <SectionReveal className="lg:col-span-3">
-            <Card className="p-8 sm:p-12 hover:translate-y-0 cursor-default">
-              <h2 className="text-3xl font-bold tracking-tight text-white mb-8 border-b border-white/5 pb-6 flex items-center gap-3">
-                <span className="text-[#d4af37]">01.</span> My Story
-              </h2>
-              <div className="space-y-6 text-lg font-light leading-relaxed text-slate-300">
-                <p>
-                  I&apos;m Kumail, a dedicated <span className="text-white font-medium">Full-Stack Developer</span> and <span className="text-[#d4af37] font-medium">AI Automation Specialist</span> based in the serene valley of Srinagar, Kashmir.
-                </p>
-                <p>
-                  I don&apos;t just write code; I architect systems that solve real business problems. By combining the speed of <span className="text-[#00D4FF] font-medium">Next.js</span> with the power of <span className="text-emerald-400 font-medium">AI Agents</span>, I help businesses eliminate manual work and scale their operations to new heights.
-                </p>
-                <p>
-                  My goal is simple: to deliver premium digital products that convert. Whether it&apos;s a high-performance SaaS platform or a 24/7 AI-driven customer support system, I bring a level of precision and craftsmanship that sets your brand apart.
-                </p>
-              </div>
-            </Card>
-          </SectionReveal>
-
-          <SectionReveal delay={0.2} className="lg:col-span-2 space-y-6">
-             <div className="glass-card p-8 rounded-3xl border-[#d4af37]/10 flex flex-col items-center justify-center text-center space-y-4">
-                <p className="text-5xl font-bold text-[#d4af37]">10+</p>
-                <p className="text-sm font-bold uppercase tracking-widest text-slate-400">Happy Clients</p>
-             </div>
-             <div className="glass-card p-8 rounded-3xl border-cyan-500/10 flex flex-col items-center justify-center text-center space-y-4">
-                <p className="text-5xl font-bold text-[#00D4FF]">15+</p>
-                <p className="text-sm font-bold uppercase tracking-widest text-slate-400">Successful Launches</p>
-             </div>
-          </SectionReveal>
-        </div>
-
-        {/* Skills Section */}
-        <div className="space-y-12">
-          <SectionHeading title="System Expertise" subtitle="Mastering the tools of the future" center />
-          <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-            <SkillBlock title="Frontend Core" items={skills.frontend} />
-            <SkillBlock title="Backend Architecture" items={skills.backend} />
-            <SkillBlock title="AI & Automation" items={skills.aiAutomation} />
-            <SkillBlock title="Operations & Tools" items={skills.tools} />
+            <p>
+              I solve this by designing <span className="text-[#09090b] dark:text-white font-medium">enterprise-grade AI automation systems</span> tailored to your exact workflows.
+            </p>
+            <p>
+              My approach bridges the gap between complex technology and practical business application. I analyze how your business operates, identify the operational bottlenecks, and architect secure, scalable automated solutions that integrate seamlessly with your existing tools.
+            </p>
           </div>
-        </div>
+        </section>
 
-        {/* Timeline Section */}
-        <div className="max-w-4xl mx-auto">
-          <SectionReveal>
-            <Card className="p-8 sm:p-12 hover:translate-y-0 cursor-default">
-               <h2 className="text-3xl font-bold tracking-tight text-white mb-12 flex items-center gap-3">
-                <span className="text-[#d4af37]">02.</span> My Journey
-              </h2>
-              <div className="space-y-12">
-                {timeline.map((item) => (
-                  <div key={`${item.year}-${item.text}`} className="relative pl-10 border-l border-white/5 pb-2 last:pb-0">
-                    <div className="absolute left-[-9px] top-0 h-4 w-4 rounded-full bg-[#d4af37] shadow-[0_0_15px_rgba(212,175,55,0.6)]" />
-                    <div className="absolute left-[-5px] top-4 h-full w-px bg-linear-to-b from-[#d4af37] to-transparent last:hidden" />
-                    <span className="text-xs font-bold text-[#d4af37] tracking-[0.3em] uppercase mb-2 block">{item.year}</span>
-                    <p className="text-lg font-light text-slate-300 leading-relaxed">{item.text}</p>
+        <section className="section-py bg-[#f4f4f5] dark:bg-[#111111]">
+          <div className="section-container max-w-5xl">
+            <SectionHeading
+              badge="Consulting Philosophy"
+              title="My Business Values"
+              subtitle="The principles that guide every system I architect and every client I partner with."
+              center
+            />
+
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-16">
+              {coreValues.map((value, i) => (
+                <motion.div
+                  key={i}
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: i * 0.1, duration: 0.5 }}
+                  className="premium-card p-8 bg-white dark:bg-[#0a0a0a]"
+                >
+                  <div className="w-12 h-12 rounded-xl bg-primary-bg dark:bg-primary-bg text-primary dark:text-primary-light flex items-center justify-center mb-6">
+                    {value.icon}
                   </div>
-                ))}
-              </div>
-            </Card>
-          </SectionReveal>
-        </div>
-      </section>
-    </div>
-  );
-}
-
-function SkillBlock({ title, items }: { title: string; items: { name: string; level: number }[] }) {
-  return (
-    <Card className="p-6 h-full flex flex-col group">
-      <h3 className="text-lg font-bold tracking-tight text-white group-hover:text-[#d4af37] transition-colors">{title}</h3>
-      <div className="mt-8 space-y-6 grow">
-        {items.map((item) => (
-          <div key={item.name} className="space-y-2">
-            <div className="flex justify-between text-[11px] font-bold uppercase tracking-widest text-slate-400">
-              <span>{item.name}</span>
-              <span className="text-[#d4af37]">{item.level}%</span>
-            </div>
-            <div className="h-1 rounded-full bg-white/5 overflow-hidden">
-              <motion.div 
-                initial={{ width: 0 }}
-                whileInView={{ width: `${item.level}%` }}
-                transition={{ duration: 1, ease: "easeOut" }}
-                className="h-full rounded-full bg-linear-to-r from-[#d4af37] to-[#00D4FF]" 
-              />
+                  <h3 className="font-bold text-lg text-[#09090b] dark:text-white mb-3">
+                    {value.title}
+                  </h3>
+                  <p className="text-[#71717a] text-sm leading-relaxed">
+                    {value.description}
+                  </p>
+                </motion.div>
+              ))}
             </div>
           </div>
-        ))}
-      </div>
-    </Card>
+        </section>
+
+      </main>
+      <CTA />
+    </>
   );
 }

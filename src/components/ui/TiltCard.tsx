@@ -1,28 +1,28 @@
 import React from "react";
-import Tilt from "react-parallax-tilt";
 import { cn } from "@/lib/utils";
+import { motion } from "framer-motion";
 
 type TiltCardProps = {
   children: React.ReactNode;
   className?: string;
+  scale?: number;
 };
 
-const TiltCard: React.FC<TiltCardProps> = ({ children, className = "" }) => (
-  <Tilt
-    tiltMaxAngleX={8}
-    tiltMaxAngleY={8}
-    glareEnable={false}
-    perspective={1000}
-    transitionSpeed={400}
-    scale={1.02}
-    className={cn(
-      "relative rounded-xl border border-transparent transition-all duration-300",
-      "hover:border-[#d4af37] hover:shadow-[0_0_20px_4px_rgba(212,175,55,0.4)]",
-      className
-    )}
-  >
-    {children}
-  </Tilt>
-);
-
+export const TiltCard = ({
+  children,
+  className,
+  scale = 1.02,
+  ...props
+}: TiltCardProps & React.ComponentPropsWithoutRef<typeof motion.div>) => {
+  return (
+    <motion.div
+      whileHover={{ scale }}
+      transition={{ duration: 0.3, ease: "easeOut" }}
+      className={cn("transition-all duration-300", className)}
+      {...props}
+    >
+      {children}
+    </motion.div>
+  );
+};
 export default TiltCard;

@@ -3,8 +3,18 @@
 import React, { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 
+interface Particle {
+  id: number;
+  size: number;
+  x: number;
+  y: number;
+  duration: number;
+  delay: number;
+  drift: string;
+}
+
 export const FloatingParticles: React.FC = () => {
-  const [particles, setParticles] = useState<any[]>([]);
+  const [particles, setParticles] = useState<Particle[]>([]);
 
   useEffect(() => {
     const generated = Array.from({ length: 30 }).map((_, i) => ({
@@ -16,6 +26,7 @@ export const FloatingParticles: React.FC = () => {
       delay: Math.random() * 5,
       drift: Math.random() > 0.5 ? "10%" : "-10%",
     }));
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setParticles(generated);
   }, []);
 

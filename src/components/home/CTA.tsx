@@ -1,52 +1,61 @@
-import Link from "next/link";
-import { Button } from "@/components/ui/button";
-import { personalInfo } from "@/lib/data";
+"use client";
 
-export function CTA() {
+import Link from "next/link";
+import { motion } from "framer-motion";
+import { personalInfo } from "@/lib/data";
+import { Badge } from "@/components/shared/Badge";
+
+interface CTAProps {
+  title?: string;
+  subtitle?: string;
+  buttonText?: string;
+  badge?: string;
+}
+
+export function CTA({ title, subtitle, buttonText, badge }: CTAProps = {}) {
   return (
-    <section className="premium-section py-20 overflow-hidden">
-      <div className="container mx-auto px-4 relative">
-        {/* Decorative background glow */}
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full max-w-[800px] h-full bg-[radial-gradient(circle,rgba(212,175,55,0.1)_0%,transparent_70%)] pointer-events-none" />
-        
-        <div className="glass-card p-8 sm:p-16 text-center relative z-10 rounded-[3rem] border-[#d4af37]/20 bg-linear-to-br from-[#d4af37]/5 to-transparent">
-          <div className="space-y-6">
-            <h2 className="text-[2.5rem] sm:text-[3.5rem] font-bold leading-tight tracking-tight text-white">
-              Ready to <span className="text-[#d4af37] italic">Automate</span> & <span className="gradient-text italic">Scale</span>?
-            </h2>
-            <p className="text-lg font-light text-slate-300 max-w-2xl mx-auto leading-relaxed">
-              Let&apos;s build your next-gen web application and integrate AI systems that work for you 24/7. 
-              <span className="block mt-2 text-[#d4af37] font-medium">Free 30-minute strategy call included.</span>
-            </p>
-            
-            <div className="mt-10 flex flex-col justify-center gap-4 sm:flex-row">
-              <Link href={personalInfo.whatsappUrl} target="_blank" className="w-full sm:w-auto">
-                <Button className="w-full sm:h-14 sm:px-10 text-base font-bold shadow-[0_10px_30px_rgba(212,175,55,0.2)]">
-                  Message on WhatsApp
-                </Button>
-              </Link>
-              <Link href="/contact" className="w-full sm:w-auto">
-                <Button variant="outline" className="w-full sm:h-14 sm:px-10 text-base font-bold bg-white/5! border-white/10! hover:border-[#d4af37]! text-white!">
-                   Book Free Call
-                </Button>
-              </Link>
-            </div>
-            
-            <div className="pt-8 flex flex-col items-center gap-4">
-              <div className="h-px w-20 bg-white/10" />
-              <div className="flex flex-col sm:flex-row items-center gap-3 text-sm text-slate-400 font-light">
-                 <p className="flex items-center gap-2">
-                    <span className="w-1.5 h-1.5 rounded-full bg-emerald-500" />
-                    Fast response within 2h
-                 </p>
-                 <span className="hidden sm:inline text-white/20">•</span>
-                 <p>{personalInfo.email}</p>
-                 <span className="hidden sm:inline text-white/20">•</span>
-                 <p>{personalInfo.phone}</p>
-              </div>
-            </div>
+    <section className="bg-[#09090b] text-white">
+      <div className="section-container">
+        <motion.div
+          initial={{ opacity: 0, scale: 0.98 }}
+          whileInView={{ opacity: 1, scale: 1 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6 }}
+          className="max-w-3xl mx-auto py-24 px-6 text-center flex flex-col items-center gap-6"
+        >
+          <Badge variant="emerald">{badge || "Ready to Transform Your Operations?"}</Badge>
+          
+          <h2
+            className="text-3xl md:text-4xl font-bold text-white tracking-tight leading-tight"
+            style={{ fontFamily: "var(--font-sora), sans-serif" }}
+          >
+            {title || "Stop Running Your Business Manually. Let AI Handle the Repetitive Work."}
+          </h2>
+          
+          <p className="text-[#a1a1aa] text-lg max-w-2xl leading-relaxed">
+            {subtitle || "Book a free 30-minute automation audit. I'll map your biggest workflow bottlenecks and show you exactly where AI can save you time and money."}
+          </p>
+          
+          <div className="flex flex-col sm:flex-row items-center gap-4 mt-4 w-full sm:w-auto">
+            <Link href={personalInfo.social.calendly} target="_blank" rel="noopener noreferrer"
+              className="btn-primary w-full sm:w-auto justify-center"
+            >
+              {buttonText || "Book Free Automation Audit"}
+            </Link>
+            <Link
+              href={personalInfo.whatsappUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center justify-center gap-2 rounded-lg border border-white/20 bg-transparent px-6 py-3 text-sm font-semibold text-white transition-all hover:border-white/50 hover:bg-white/5 w-full sm:w-auto"
+            >
+              Chat on WhatsApp
+            </Link>
           </div>
-        </div>
+          
+          <p className="text-sm text-[#71717a] mt-2">
+            30-minute call · No commitment · Free of charge
+          </p>
+        </motion.div>
       </div>
     </section>
   );

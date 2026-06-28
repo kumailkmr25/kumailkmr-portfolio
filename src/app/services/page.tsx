@@ -1,145 +1,135 @@
+"use client";
+
+import { motion } from "framer-motion";
+import { SectionHeading } from "@/components/shared/SectionHeading";
+import { services } from "@/lib/data";
+import { CTA } from "@/components/home/CTA";
+import { Check } from "lucide-react";
+import { Badge } from "@/components/shared/Badge";
 import Link from "next/link";
-import { faqs, pricingTiers } from "@/lib/data";
-import { Card } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { cn } from "@/lib/utils";
+
+const techEcosystem = [
+  {
+    category: "AI Models",
+    role: "The Brains",
+    value: "I use state-of-the-art LLMs (like OpenAI's GPT-4) not because they're trendy, but because they can understand complex customer intent and navigate ambiguous business rules better than older rigid decision trees.",
+  },
+  {
+    category: "WhatsApp Business API",
+    role: "The Interface",
+    value: "Your customers already live in WhatsApp. By building the automation directly into the tools they already use, we eliminate the friction of asking them to download new apps or learn new portals.",
+  },
+  {
+    category: "Automation Platforms",
+    role: "The Connectors",
+    value: "Tools like Make.com or Zapier act as the nervous system, allowing data to flow securely between the AI, your communication channels, and your backend databases without human intervention.",
+  },
+  {
+    category: "Cloud Databases & CRMs",
+    role: "The Memory",
+    value: "Whether we integrate with your existing CRM (Salesforce, HubSpot) or build a custom lightweight database, this layer ensures the system remembers customer context and historical interactions.",
+  },
+  {
+    category: "Dashboards",
+    role: "The Visibility",
+    value: "I implement clean, real-time dashboards so you are never locked out of what the automation is doing. You get complete transparency into conversation logs, lead statuses, and system performance.",
+  }
+];
 
 export default function ServicesPage() {
   return (
-    <div className="premium-section min-h-screen">
-      {/* Ambient orbs */}
-      <div className="orb -left-20 top-20 opacity-30" />
-      <div className="orb -right-40 bottom-40 opacity-20" />
+    <>
+      <main className="bg-white dark:bg-[#0a0a0a] min-h-screen">
+        <section className="section-py section-container pt-32">
+          <SectionHeading
+            badge="Business Solutions"
+            title="Systems Designed For ROI"
+            subtitle="I build tailored automation ecosystems that eliminate administrative waste and accelerate your operational velocity."
+            center
+          />
 
-      <section className="container mx-auto px-4 py-16 md:py-24 space-y-24">
-        <div className="space-y-6 text-center lg:text-left">
-          <h1 className="text-[3.5rem] font-bold leading-[1.1] tracking-tight sm:text-[4.5rem] md:text-6xl lg:text-7xl">
-            <span className="gradient-text italic">Services</span> <br />
-            & Pricing
-          </h1>
-          <p className="text-lg font-light text-slate-400 sm:text-xl max-w-2xl leading-relaxed">
-            Transparent investment for high-performance digital products. No hidden fees. Premium craftsmanship guaranteed.
-          </p>
-        </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-16">
+            {services.map((service, i) => {
+              const serviceUrl = service.href || `/services/${service.id}`;
+              const CardContent = (
+                <>
+                  <div className="w-12 h-12 rounded-xl bg-white dark:bg-[#0a0a0a] border border-black/5 dark:border-white/5 flex items-center justify-center text-2xl mb-6">
+                    {service.icon}
+                  </div>
+                  <h2 className="text-xl font-bold text-[#09090b] dark:text-white mb-3 flex items-center justify-between">
+                    {service.title}
+                    <span className="text-primary text-sm font-normal bg-primary/10 px-2 py-1 rounded-md whitespace-nowrap ml-3">View Details &rarr;</span>
+                  </h2>
+                  <p className="text-[#71717a] text-sm leading-relaxed mb-8 flex-1">
+                    {service.description}
+                  </p>
 
-        <div className="grid gap-8 sm:gap-10 lg:grid-cols-3">
-          {pricingTiers.map((tier) => (
-            <Card key={tier.id} className={cn(
-              "p-8 sm:p-10 flex flex-col h-full relative overflow-hidden group",
-              tier.popular ? "border-[#d4af37]/40 shadow-[0_0_50px_rgba(212,175,55,0.1)]" : "border-white/10"
-            )}>
-              {tier.popular && (
-                <div className="absolute top-0 right-0 bg-[#d4af37] text-black text-[10px] font-bold uppercase tracking-widest px-4 py-1.5 rounded-bl-2xl z-10">
-                  Most Popular
-                </div>
-              )}
-              
-              <div className="mb-8">
-                <p className="text-[11px] font-bold uppercase tracking-[0.2em] text-[#d4af37] mb-3">{tier.name}</p>
-                <h3 className="text-4xl font-bold text-white mb-2">{tier.price}</h3>
-                <p className="text-sm font-light text-slate-500">Delivery: {tier.delivery}</p>
-              </div>
+                  <div className="pt-6 border-t border-black/5 dark:border-white/5">
+                    <h4 className="font-semibold text-xs text-[#09090b] dark:text-white uppercase tracking-wider mb-4">
+                      Key Outcomes
+                    </h4>
+                    <ul className="flex flex-col gap-3">
+                      {service.features.map((feature, idx) => (
+                        <li key={idx} className="flex gap-3 text-sm">
+                          <Check className="h-4 w-4 text-primary mt-0.5 flex-shrink-0" />
+                          <span className="text-[#71717a]">{feature}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                </>
+              );
 
-              <div className="space-y-6 grow">
-                <div>
-                   <p className="text-xs font-bold uppercase tracking-widest text-slate-400 mb-4 pb-4 border-b border-white/5">
-                     Best For: <span className="text-white ml-2">{tier.bestFor}</span>
-                   </p>
-                   <ul className="space-y-4">
-                     {tier.features.map((f) => (
-                       <li key={f} className="text-sm font-light text-slate-300 flex items-start gap-3">
-                         <span className="text-[#d4af37] mt-0.5">✦</span>
-                         {f}
-                       </li>
-                     ))}
-                   </ul>
-                </div>
-                
-                {tier.excludedFeatures.length > 0 && (
-                   <ul className="space-y-4 opacity-40">
-                     {tier.excludedFeatures.map((f) => (
-                       <li key={f} className="text-sm font-light text-slate-400 flex items-start gap-3">
-                         <span className="mt-0.5 text-xs">✕</span>
-                         {f}
-                       </li>
-                     ))}
-                   </ul>
-                )}
-              </div>
-
-              <Link href={tier.ctaLink} target="_blank" className="mt-12 block w-full">
-                <Button 
-                  className="w-full h-14 text-base font-bold" 
-                  variant={tier.popular ? "default" : "outline"}
+              return (
+                <motion.div
+                  key={service.id}
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: i * 0.1, duration: 0.5 }}
                 >
-                  {tier.ctaLabel}
-                </Button>
-              </Link>
-            </Card>
-          ))}
-        </div>
+                  <Link href={serviceUrl} className="premium-card p-8 flex flex-col h-full bg-[#f4f4f5] dark:bg-[#111111] hover:border-primary/50 transition-colors cursor-pointer group">
+                    {CardContent}
+                  </Link>
+                </motion.div>
+              );
+            })}
+          </div>
+        </section>
 
-        <div className="grid gap-8 lg:grid-cols-2">
-           <Card className="p-10 border-cyan-500/20 bg-linear-to-br from-cyan-500/5 to-transparent relative overflow-hidden group hover:border-cyan-500/40">
-              <div className="absolute -right-12 -top-12 text-[10rem] opacity-[0.03] group-hover:opacity-[0.07] transition-opacity">🤖</div>
-              <h2 className="text-2xl font-bold text-white mb-4 flex items-center gap-3">
-                 <span className="w-10 h-10 rounded-xl bg-cyan-500/10 flex items-center justify-center text-xl">🤖</span>
-                 AI Automation Add-On
-              </h2>
-              <p className="text-slate-400 font-light mb-6">
-                Integrate advanced AI agents and custom automation workflows into your existing platform to eliminate manual operations.
-              </p>
-              <p className="text-2xl font-bold text-cyan-400 mb-8">₹20,000 - ₹50,000</p>
-              <Link href="https://wa.me/916006121193?text=Hi%20Kumail!%20I%20want%20to%20add%20AI%20Automation%20to%20my%20project." target="_blank">
-                <Button variant="outline" className="h-12 px-8 border-cyan-500/20! text-cyan-400!">Discuss Automation →</Button>
-              </Link>
-           </Card>
-
-           <Card className="p-10 border-[#6C63FF]/20 bg-linear-to-br from-[#6C63FF]/5 to-transparent relative overflow-hidden group hover:border-[#6C63FF]/40">
-              <div className="absolute -right-12 -top-12 text-[10rem] opacity-[0.03] group-hover:opacity-[0.07] transition-opacity">🤝</div>
-              <h2 className="text-2xl font-bold text-white mb-4 flex items-center gap-3">
-                 <span className="w-10 h-10 rounded-xl bg-[#6C63FF]/10 flex items-center justify-center text-xl">🤝</span>
-                 Monthly Retainer
-              </h2>
-              <p className="text-slate-400 font-light mb-6">
-                A long-term partnership providing dedicated support, continuous development, and priority maintenance for your systems.
-              </p>
-              <p className="text-2xl font-bold text-[#6C63FF] mb-8">₹30,000 - ₹60,000 <span className="text-xs font-light text-slate-500 uppercase tracking-widest">/ month</span></p>
-              <Link href="https://wa.me/916006121193?text=Hi%20Kumail!%20I'm%20interested%20in%20a%20monthly%20retainer%20partnership." target="_blank">
-                <Button variant="outline" className="h-12 px-8 border-[#6C63FF]/20! text-[#6C63FF]!">Explore Partnership →</Button>
-              </Link>
-           </Card>
-        </div>
-
-        <div className="grid gap-12 lg:grid-cols-3">
-           <div className="lg:col-span-1 space-y-6">
-              <h2 className="text-3xl font-bold text-white">Payment & FAQs</h2>
-              <p className="text-slate-400 font-light">
-                Everything you need to know about starting a project. If you have more questions, feel free to reach out.
-              </p>
-              <div className="p-8 glass-card border-white/5 rounded-3xl space-y-4">
-                 <p className="text-xs font-bold uppercase tracking-widest text-[#d4af37]">Preferred Methods</p>
-                 <div className="space-y-2 text-slate-300">
-                    <p className="flex items-center gap-2">💳 <span className="font-medium">UPI:</span> Provided on Request</p>
-                    <p className="flex items-center gap-2">🏦 <span className="font-medium">Bank:</span> Details on Request</p>
-                 </div>
-                 <div className="pt-4 border-t border-white/5">
-                    <p className="text-xs font-bold text-slate-500 uppercase tracking-widest">Standard Terms</p>
-                    <p className="text-sm text-slate-400 mt-2">50% Commitment to start project <br /> 50% On successful delivery</p>
-                 </div>
-              </div>
-           </div>
-           
-           <div className="lg:col-span-2 grid gap-4">
-              {faqs.map((f) => (
-                <Card key={f.question} className="p-8 hover:border-[#d4af37]/30 transition-colors">
-                  <h4 className="text-lg font-bold text-white mb-3">{f.question}</h4>
-                  <p className="text-sm text-slate-400 font-light leading-relaxed">{f.answer}</p>
-                </Card>
+        <section className="section-py bg-[#f4f4f5] dark:bg-[#111111]">
+          <div className="section-container max-w-5xl">
+            <SectionHeading
+              badge="The Stack"
+              title="Technology Ecosystem"
+              subtitle="I choose technology based on business value, stability, and integration capability—not technical jargon."
+              center
+            />
+            
+            <div className="mt-16 grid grid-cols-1 md:grid-cols-2 gap-8">
+              {techEcosystem.map((tech, i) => (
+                <motion.div
+                  key={i}
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: i * 0.1, duration: 0.5 }}
+                  className="p-6 bg-white dark:bg-[#0a0a0a] rounded-2xl border border-black/5 dark:border-white/5"
+                >
+                  <div className="flex items-center justify-between mb-4">
+                    <h3 className="font-bold text-lg text-[#09090b] dark:text-white">{tech.category}</h3>
+                    <Badge variant="emerald" className="text-xs">{tech.role}</Badge>
+                  </div>
+                  <p className="text-sm text-[#71717a] leading-relaxed">
+                    {tech.value}
+                  </p>
+                </motion.div>
               ))}
-           </div>
-        </div>
-      </section>
-    </div>
+            </div>
+          </div>
+        </section>
+      </main>
+      <CTA />
+    </>
   );
 }

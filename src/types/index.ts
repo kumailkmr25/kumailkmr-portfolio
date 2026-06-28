@@ -34,6 +34,11 @@ export interface ServiceItem {
   title: string;
   description: string;
   features: string[];
+  href?: string;
+  challenges?: string[];
+  benefits?: string[];
+  workflow?: { step: string; desc: string; icon?: string }[];
+  faqs?: { q: string; a: string }[];
 }
 
 export interface ProjectItem {
@@ -92,4 +97,71 @@ export interface TimelineItem {
 export interface FAQItem {
   question: string;
   answer: string;
+}
+
+export interface IndustryCard {
+  id: string;
+  icon: string;
+  name: string;
+  problems: string[];
+  howAIHelps: string;
+  outcomes: string[];
+}
+
+export interface BusinessProblem {
+  id: string;
+  icon: string;
+  problem: string;
+  impact: string;
+  solution: string;
+  outcome: string;
+}
+
+export interface ProcessStep {
+  step: number;
+  title: string;
+  description: string;
+  icon: string;
+  duration?: string;
+}
+
+export interface CaseStudy {
+  id: string;
+  label: "Demo Solution" | "Concept Workflow";
+  industry: string;
+  industryIcon: string;
+  problem: string;
+  existingProcess: string;
+  solution: string;
+  workflow: string[];
+  impact: string[];
+  tags: string[];
+  color: string;
+}
+
+export interface DemoVideo {
+  id: string;
+  title: string;
+  industry: string;
+  icon: string;
+  description: string;
+  duration: string;
+  tag: string;
+}
+
+export interface Article {
+  id: string;
+  title: string;
+  excerpt: string;
+  topic: string;
+  readTime: string;
+  date: string;
+  slug: string;
+}
+
+export interface WhyWorkWithMe {
+  id: string;
+  icon: string;
+  title: string;
+  description: string;
 }

@@ -100,14 +100,14 @@ export function AIAssistantWidget() {
         whileHover={{ scale: 1.05 }}
         whileTap={{ scale: 0.95 }}
         onClick={() => setIsOpen(true)}
-        className="fixed bottom-24 right-4 md:bottom-6 md:right-6 z-50 w-[72px] h-[72px] rounded-full shadow-2xl flex items-center justify-center hover:shadow-[0_0_40px_rgba(16,185,129,0.4)] transition-shadow group border border-border"
+        className="fixed bottom-24 right-4 md:bottom-6 md:right-6 z-50 w-[80px] h-[80px] rounded-full shadow-2xl flex items-center justify-center hover:shadow-[0_0_40px_rgba(16,185,129,0.4)] transition-shadow group border border-border"
       >
         {/* Animated Orb Ring */}
         <div className="absolute inset-0 rounded-full bg-gradient-to-tr from-emerald-600 via-primary to-cyan-400 animate-spin" style={{ animationDuration: '4s' }} />
         
         {/* Glassmorphic 3D Container */}
         <div className="absolute inset-1 rounded-full bg-surface/90 backdrop-blur-xl z-10 overflow-hidden flex items-center justify-center">
-          <RiRobotFill className="w-8 h-8 text-primary group-hover:scale-110 transition-transform duration-300" />
+          <RiRobotFill className="w-10 h-10 text-primary group-hover:scale-110 transition-transform duration-300" />
         </div>
         
         <span className="absolute -top-1 -right-1 w-4 h-4 bg-red-500 rounded-full border-2 border-background shadow-lg z-40 animate-pulse" />
@@ -124,10 +124,10 @@ export function AIAssistantWidget() {
             className="fixed bottom-4 right-4 md:bottom-6 md:right-6 z-50 w-[calc(100vw-32px)] md:w-[400px] h-[600px] max-h-[85vh] bg-surface/95 backdrop-blur-3xl rounded-3xl shadow-2xl border border-border-strong flex flex-col overflow-hidden"
           >
             {/* Header */}
-            <div className="p-4 border-b border-border bg-background/50 flex items-center justify-between">
+            <div className="p-3 border-b border-border bg-background/50 flex items-center justify-between">
               <div className="flex items-center gap-3">
                 <div className="relative w-10 h-10 rounded-full bg-primary/20 flex items-center justify-center border border-primary/30">
-                  <RiRobotFill className="w-5 h-5 text-primary" />
+                  <RiRobotFill className="w-8 h-8 text-primary" />
                   <span className="absolute bottom-0 right-0 w-2.5 h-2.5 rounded-full bg-emerald-500 border-2 border-surface" />
                 </div>
                 <div>
@@ -155,8 +155,8 @@ export function AIAssistantWidget() {
             </div>
 
             {/* Messages Area */}
-            <div className="flex-1 p-4 overflow-y-auto space-y-4">
-              <div className="flex justify-center mb-6">
+            <div className="flex-1 p-3 overflow-y-auto space-y-3">
+              <div className="flex justify-center mb-2">
                 <span className="text-[10px] uppercase tracking-wider text-foreground-muted bg-background px-3 py-1 rounded-full">Today</span>
               </div>
               
@@ -205,7 +205,7 @@ export function AIAssistantWidget() {
             {/* Quick Suggestions & Input Area */}
             <div className="bg-background/80 backdrop-blur-md border-t border-border p-3">
               {/* Horizontally scrolling chips */}
-              <div className="flex overflow-x-auto gap-2 pb-3 scrollbar-hide -mx-1 px-1">
+              <div className="flex overflow-x-auto gap-1 pb-2 scrollbar-hide -mx-1 px-1">
                 {SUGGESTED_QUESTIONS.map((q, idx) => (
                   <button
                     key={idx}

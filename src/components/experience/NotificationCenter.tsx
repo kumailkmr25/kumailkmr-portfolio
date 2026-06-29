@@ -103,17 +103,9 @@ export function NotificationCenter() {
  initial={{ opacity: 0, scale: 0.9, y: activeToast.type === 'welcome' ? 0 : 50 }}
  animate={{ opacity: 1, scale: 1, y: 0 }}
  exit={{ opacity: 0, scale: 0.9, y: activeToast.type === 'welcome' ? 0 : 50 }}
- className={
- activeToast.type === 'welcome'
- ? "fixed inset-0 z-[100] flex items-center justify-center p-4 bg-black/20 dark:bg-black/40 backdrop-blur-sm"
- : "fixed top-24 right-6 z-50 w-80 md:w-96 bg-white/80 dark:bg-background/80 backdrop-blur-xl border border-border-strong rounded-2xl shadow-xl overflow-hidden relative"
- }
+ className="fixed bottom-4 right-4 md:bottom-6 md:right-6 z-50 w-[calc(100vw-32px)] md:w-[400px] h-[600px] max-h-[85vh] bg-white/95 backdrop-blur-3xl rounded-3xl shadow-2xl border border-border-strong flex flex-col overflow-hidden"
  >
- <div className={
- activeToast.type === 'welcome'
- ? "w-full max-w-md bg-white dark:bg-background border border-border-strong rounded-2xl shadow-2xl overflow-hidden relative"
- : "w-full"
- }>
+ <div className="w-full">
  <div className="p-6 md:p-8">
  <h4 className="font-bold text-foreground text-xl flex items-center gap-2 mb-3">
  {activeToast.title}
@@ -171,23 +163,6 @@ export function NotificationCenter() {
  </motion.div>
  )}
  </AnimatePresence>
-
- {/* Bell Icon for Navbar */}
- <div className="relative">
- <button
- onClick={() => {
- setIsOpen(!isOpen);
- if (!isOpen) markAllAsRead();
- }}
- className="w-10 h-10 border border-border-strong rounded-full flex items-center justify-center hover:bg-black/5 dark:hover:bg-white/5 transition-colors relative group"
- >
- <Bell className="w-5 h-5 text-foreground group-hover:text-primary transition-colors" />
- {unreadCount > 0 && (
- <span className="absolute -top-1 -right-1 w-4 h-4 bg-primary text-white text-[9px] font-bold rounded-full flex items-center justify-center border border-white dark:border-[#0a0a0a]">
- {unreadCount}
- </span>
- )}
- </button>
 
  {/* Dropdown Panel */}
  <AnimatePresence>
@@ -251,7 +226,7 @@ export function NotificationCenter() {
  </motion.div>
  )}
  </AnimatePresence>
- </div>
+ 
  </>
  );
 }

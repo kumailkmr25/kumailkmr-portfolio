@@ -12,6 +12,7 @@ import { NotificationCenter } from "@/components/experience/NotificationCenter";
 import { StickyMobileCTA } from "@/components/layout/StickyMobileCTA";
 import { SmartSectionNav } from "@/components/layout/SmartSectionNav";
 import { AIAssistantWidget } from "@/components/experience/AIAssistantWidget";
+import { IntroAnimation } from "@/components/experience/IntroAnimation";
 import { WelcomeBanner } from "@/components/experience/WelcomeBanner";
 
 const jakarta = Plus_Jakarta_Sans({
@@ -62,7 +63,8 @@ export default function RootLayout({
  <body className={`${jakarta.variable} ${outfit.variable} antialiased selection:bg-primary/20 selection:text-primary dark:selection:bg-primary/30 min-h-screen flex flex-col overflow-x-hidden`}>
  <ThemeProvider>
  <VisitorExperienceProvider>
- <WelcomeBanner />
+ <IntroAnimation />
+    <WelcomeBanner />
  <Navbar />
  <main className="flex-1 pt-20 pb-16 md:pb-0">
  {children}

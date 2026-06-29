@@ -1,21 +1,74 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { motion, AnimatePresence, useReducedMotion } from "framer-motion";
 import { useVisitorExperience } from "./VisitorExperienceContext";
-import { BarChart3, MessageSquare, Zap, Activity } from "lucide-react";
+
+// Web Audio API helper for a futuristic UI chime (zero assets needed!)
+const playFuturisticChime = () => {
+  try {
+    const AudioContext = window.AudioContext || (window as any).webkitAudioContext;
+    if (!AudioContext) return;
+    const ctx = new AudioContext();
+
+    // Oscillator 1: High pitched sweep
+    const osc1 = ctx.createOscillator();
+    const gain1 = ctx.createGain();
+    osc1.type = "sine";
+    osc1.frequency.setValueAtTime(800, ctx.currentTime);
+    osc1.frequency.exponentialRampToValueAtTime(1200, ctx.currentTime + 0.1);
+    
+    // Oscillator 2: Lower bell tone
+    const osc2 = ctx.createOscillator();
+    const gain2 = ctx.createGain();
+    osc2.type = "triangle";
+    osc2.frequency.setValueAtTime(400, ctx.currentTime);
+    osc2.frequency.exponentialRampToValueAtTime(600, ctx.currentTime + 0.2);
+
+    gain1.gain.setValueAtTime(0, ctx.currentTime);
+    gain1.gain.linearRampToValueAtTime(0.3, ctx.currentTime + 0.05);
+    gain1.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + 0.5);
+
+    gain2.gain.setValueAtTime(0, ctx.currentTime);
+    gain2.gain.linearRampToValueAtTime(0.3, ctx.currentTime + 0.05);
+    gain2.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + 0.8);
+
+    osc1.connect(gain1);
+    gain1.connect(ctx.destination);
+    osc2.connect(gain2);
+    gain2.connect(ctx.destination);
+
+    osc1.start();
+    osc2.start();
+    osc1.stop(ctx.currentTime + 0.5);
+    osc2.stop(ctx.currentTime + 0.8);
+  } catch (e) {
+    console.warn("Audio playback failed or blocked.", e);
+  }
+};
 
 export function IntroAnimation() {
   const { showIntro, setShowIntro } = useVisitorExperience();
   const shouldReduceMotion = useReducedMotion();
   const [isVisible, setIsVisible] = useState(false);
+  const audioPlayed = useRef(false);
 
   useEffect(() => {
     if (showIntro) {
       setIsVisible(true);
       document.body.style.overflow = 'hidden';
       
-      const TOTAL_DURATION = shouldReduceMotion ? 2500 : 4500;
+      // Check user preferences for sound
+      const isMuted = localStorage.getItem('portfolio_mute_sound') === 'true';
+      
+      if (!isMuted && !audioPlayed.current) {
+        // Attempt to play sound (may be blocked by browser autoplay policy until interaction)
+        // A click event listener on the window can catch it if blocked, but for a short intro we just try.
+        setTimeout(() => playFuturisticChime(), 1000);
+        audioPlayed.current = true;
+      }
+
+      const TOTAL_DURATION = shouldReduceMotion ? 2500 : 5000;
       
       const timer = setTimeout(() => {
         setIsVisible(false);
@@ -40,6 +93,13 @@ export function IntroAnimation() {
           exit={{ opacity: 0 }}
           transition={{ duration: 0.8, ease: "easeInOut" }}
           className="fixed inset-0 z-[100] flex items-center justify-center bg-[#050505] text-white overflow-hidden"
+          onClick={() => {
+            // Unblock audio on click if they clicked early
+            if (!audioPlayed.current) {
+               playFuturisticChime();
+               audioPlayed.current = true;
+            }
+          }}
         >
           {/* Ambient Lighting Background */}
           <div className="absolute inset-0 flex items-center justify-center opacity-40">
@@ -47,7 +107,7 @@ export function IntroAnimation() {
               initial={{ scale: 0.5, opacity: 0 }}
               animate={{ scale: 1.5, opacity: 0.8 }}
               transition={{ duration: 4, ease: "easeOut" }}
-              className="w-[60vw] h-[60vw] max-w-[600px] max-h-[600px] rounded-full bg-gradient-to-tr from-primary/10 via-emerald-500/5 to-cyan-500/10 blur-[100px]"
+              className="w-[60vw] h-[60vw] max-w-[600px] max-h-[600px] rounded-full bg-gradient-to-tr from-primary/20 via-emerald-500/10 to-cyan-500/20 blur-[100px]"
             />
           </div>
 
@@ -66,70 +126,25 @@ export function IntroAnimation() {
             /* FULL CINEMATIC SEQUENCE */
             <div className="relative z-10 w-full h-full flex flex-col items-center justify-center">
 
-              {/* Scene 1 & 2: Neural Formation (0s - 1.5s) */}
+              {/* Neural Particles / ECG Background (0s - 2.5s) */}
               <motion.div
                 initial={{ opacity: 0, scale: 0.8 }}
                 animate={{ opacity: [0, 1, 1, 0], scale: [0.8, 1, 1, 1.2] }}
-                transition={{ duration: 1.5, times: [0, 0.3, 0.7, 1], ease: "easeInOut" }}
-                className="absolute inset-0 flex items-center justify-center"
+                transition={{ duration: 2.5, times: [0, 0.3, 0.7, 1], ease: "easeInOut" }}
+                className="absolute inset-0 flex flex-col items-center justify-center"
               >
-                <svg className="w-64 h-64 md:w-96 md:h-96 opacity-60" viewBox="0 0 100 100">
-                  <motion.path
-                    d="M 20 50 Q 35 20, 50 50 T 80 50"
-                    fill="transparent"
-                    strokeWidth="0.5"
-                    stroke="url(#grad1)"
-                    initial={{ pathLength: 0 }}
-                    animate={{ pathLength: 1 }}
-                    transition={{ duration: 1, ease: "easeInOut" }}
-                  />
-                  <motion.path
-                    d="M 20 50 Q 50 80, 50 50 T 80 50"
-                    fill="transparent"
-                    strokeWidth="0.5"
-                    stroke="url(#grad2)"
-                    initial={{ pathLength: 0 }}
-                    animate={{ pathLength: 1 }}
-                    transition={{ duration: 1, delay: 0.2, ease: "easeInOut" }}
-                  />
-                  <motion.circle cx="50" cy="50" r="2" fill="#10b981" initial={{ scale: 0 }} animate={{ scale: 1 }} transition={{ delay: 0.8 }} />
-                  <motion.circle cx="20" cy="50" r="1.5" fill="#fff" initial={{ scale: 0 }} animate={{ scale: 1 }} transition={{ delay: 0.2 }} />
-                  <motion.circle cx="80" cy="50" r="1.5" fill="#fff" initial={{ scale: 0 }} animate={{ scale: 1 }} transition={{ delay: 0.6 }} />
-                  
-                  <defs>
-                    <linearGradient id="grad1" x1="0" y1="0" x2="1" y2="0">
-                      <stop offset="0%" stopColor="#10b981" stopOpacity="0"/>
-                      <stop offset="50%" stopColor="#10b981" stopOpacity="1"/>
-                      <stop offset="100%" stopColor="#10b981" stopOpacity="0"/>
-                    </linearGradient>
-                    <linearGradient id="grad2" x1="0" y1="0" x2="1" y2="0">
-                      <stop offset="0%" stopColor="#06b6d4" stopOpacity="0"/>
-                      <stop offset="50%" stopColor="#06b6d4" stopOpacity="1"/>
-                      <stop offset="100%" stopColor="#06b6d4" stopOpacity="0"/>
-                    </linearGradient>
-                  </defs>
-                </svg>
-              </motion.div>
-
-              {/* Scene 3: Premium ECG Pulse (1.2s - 2.0s) */}
-              <motion.div
-                initial={{ opacity: 0 }}
-                animate={{ opacity: [0, 1, 1, 0] }}
-                transition={{ duration: 1.2, delay: 1.2, times: [0, 0.2, 0.8, 1], ease: "easeInOut" }}
-                className="absolute inset-0 flex items-center justify-center"
-              >
-                <div className="flex items-center gap-1 h-12">
+                <div className="flex items-center gap-1 h-12 mb-8">
                   {[...Array(20)].map((_, i) => (
                     <motion.div
                       key={i}
                       initial={{ height: "2px", backgroundColor: "#fff" }}
                       animate={{ 
-                        height: ["2px", `${Math.random() * 40 + 10}px`, "2px"],
-                        backgroundColor: ["#fff", "#10b981", "#06b6d4"]
+                        height: ["2px", `${Math.random() * 60 + 10}px`, "2px"],
+                        backgroundColor: ["#fff", "var(--color-primary)", "#06b6d4"]
                       }}
                       transition={{ 
-                        duration: 0.6, 
-                        delay: 1.2 + (i * 0.03), 
+                        duration: 0.8, 
+                        delay: 0.5 + (i * 0.04), 
                         ease: "circOut" 
                       }}
                       className="w-1 rounded-full shadow-[0_0_10px_rgba(16,185,129,0.5)]"
@@ -138,66 +153,41 @@ export function IntroAnimation() {
                 </div>
               </motion.div>
 
-              {/* Scene 4 & 5: CSS 3D Chatbot & Holographic Widgets (1.8s - 3.5s) */}
+              {/* 3D Spline Robot Reveal (1.5s - 4s) */}
               <motion.div
-                initial={{ opacity: 0, scale: 0.5 }}
-                animate={{ opacity: [0, 1, 1, 0], scale: [0.5, 1, 1, 1.5] }}
-                transition={{ duration: 2, delay: 1.8, times: [0, 0.2, 0.8, 1], ease: "easeOut" }}
+                initial={{ opacity: 0, scale: 0.5, y: 50 }}
+                animate={{ opacity: [0, 1, 1, 0], scale: [0.5, 1, 1, 1.2], y: [50, 0, 0, -20] }}
+                transition={{ duration: 2.5, delay: 1.5, times: [0, 0.2, 0.8, 1], ease: "easeOut" }}
                 className="absolute inset-0 flex items-center justify-center"
               >
-                <div className="relative flex items-center justify-center">
-                  {/* Holographic Orbit 1 */}
-                  <motion.div 
-                    initial={{ rotate: -180, opacity: 0 }}
-                    animate={{ rotate: 0, opacity: 1 }}
-                    transition={{ duration: 1.5, delay: 2, ease: "backOut" }}
-                    className="absolute w-48 h-48 border border-white/5 rounded-full flex items-start justify-center"
-                  >
-                    <div className="w-8 h-8 rounded-lg bg-white/10 backdrop-blur-md border border-white/20 flex items-center justify-center -mt-4 shadow-[0_0_15px_rgba(255,255,255,0.1)]">
-                      <BarChart3 className="w-4 h-4 text-emerald-300" />
-                    </div>
-                  </motion.div>
-                  
-                  {/* Holographic Orbit 2 */}
-                  <motion.div 
-                    initial={{ rotate: 180, opacity: 0 }}
-                    animate={{ rotate: 90, opacity: 1 }}
-                    transition={{ duration: 1.5, delay: 2.1, ease: "backOut" }}
-                    className="absolute w-64 h-64 border border-white/5 rounded-full flex items-start justify-center"
-                  >
-                    <div className="w-8 h-8 rounded-lg bg-white/10 backdrop-blur-md border border-white/20 flex items-center justify-center -mt-4 rotate-[-90deg] shadow-[0_0_15px_rgba(255,255,255,0.1)]">
-                      <MessageSquare className="w-4 h-4 text-cyan-300" />
-                    </div>
-                  </motion.div>
-
-                  {/* 3D Glass AI Core */}
-                  <div className="relative w-24 h-24 rounded-full bg-gradient-to-br from-white/20 to-transparent border border-white/30 backdrop-blur-xl shadow-[inset_0_0_20px_rgba(255,255,255,0.2),0_0_30px_rgba(16,185,129,0.3)] flex items-center justify-center overflow-hidden">
-                    <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,_var(--tw-gradient-stops))] from-white/40 via-transparent to-transparent opacity-60" />
-                    <motion.div 
-                      animate={{ rotate: 360 }}
-                      transition={{ duration: 4, repeat: Infinity, ease: "linear" }}
-                      className="absolute inset-1 rounded-full bg-gradient-to-tr from-emerald-500/40 via-transparent to-cyan-500/40 blur-md"
-                    />
-                    <Zap className="w-8 h-8 text-white relative z-10 drop-shadow-[0_0_10px_rgba(255,255,255,0.8)]" />
-                  </div>
+                <div className="relative w-[300px] h-[300px] md:w-[500px] md:h-[500px] rounded-full flex items-center justify-center overflow-hidden">
+                   {/* Glow behind robot */}
+                   <div className="absolute inset-0 bg-primary/20 blur-[80px] rounded-full z-0" />
+                   
+                   <iframe 
+                      src="https://my.spline.design/3drobot-e9c52402ba69da1bf33a5951d8d3f1fc/" 
+                      className="w-[150%] h-[150%] relative z-10 pointer-events-none mix-blend-screen" 
+                      frameBorder="0"
+                      loading="lazy"
+                   />
                 </div>
               </motion.div>
 
-              {/* Scene 6: Brand Reveal (3.2s - 4.5s) */}
+              {/* Brand Reveal (3.5s - 5s) */}
               <motion.div
-                initial={{ opacity: 0, filter: "blur(10px)" }}
-                animate={{ opacity: 1, filter: "blur(0px)" }}
-                transition={{ duration: 1, delay: 3.2, ease: "easeOut" }}
+                initial={{ opacity: 0, filter: "blur(10px)", scale: 0.9 }}
+                animate={{ opacity: 1, filter: "blur(0px)", scale: 1 }}
+                transition={{ duration: 1.2, delay: 3.5, ease: "easeOut" }}
                 className="absolute inset-0 flex flex-col items-center justify-center text-center px-6"
               >
-                <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/5 border border-white/10 text-xs font-semibold tracking-widest uppercase text-emerald-400 mb-6">
-                  <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" /> Systems Initialized
+                <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/5 border border-white/10 text-xs font-semibold tracking-widest uppercase text-primary mb-6 shadow-[0_0_20px_rgba(16,185,129,0.2)]">
+                  <span className="w-1.5 h-1.5 rounded-full bg-primary animate-pulse" /> Systems Initialized
                 </div>
-                <h1 className="text-4xl md:text-6xl font-bold tracking-tight mb-4 font-sora bg-clip-text text-transparent bg-gradient-to-b from-white to-white/70">
+                <h1 className="text-5xl md:text-7xl font-bold tracking-tight mb-4 font-sora bg-clip-text text-transparent bg-gradient-to-b from-white to-white/70">
                   Kumail Kmr
                 </h1>
                 <p className="text-lg md:text-xl text-[#a1a1aa] max-w-md mx-auto font-light">
-                  Enterprise AI Automation & Systems Architecture
+                  Enterprise AI Automation
                 </p>
               </motion.div>
             </div>

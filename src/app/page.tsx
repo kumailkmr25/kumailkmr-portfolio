@@ -22,30 +22,30 @@ import { Testimonials } from "@/components/home/Testimonials";
 import { CTA } from "@/components/home/CTA";
 
 export default function Home() {
-  return (
-    <>
-      <Hero />
-      <ProblemSelector />
-      <TrustBar />
-      <BusinessOutcomes />
-      <WhoIHelp />
-      <BusinessProblems />
-      <BeforeAfter />
-      <SolutionArchitecture />
-      <ServicesSection />
-      <WorkflowVisualizer />
-      <ROICalculator />
-      <CustomVsGeneric />
-      <Process />
-      <DemoCenter />
-      <CaseStudiesPreview />
-      <DemoVideos />
-      <ReadinessQuiz />
-      <SecurityPrivacy />
-      <WhyWorkWithMeSection />
-      <ArticlesPreview />
-      <Testimonials />
-      <CTA />
-    </>
-  );
+ return (
+ <>
+ <Hero />
+ <ProblemSelector />
+ <TrustBar />
+ <BusinessOutcomes />
+ <WhoIHelp />
+ <BusinessProblems />
+ <BeforeAfter />
+ <SolutionArchitecture />
+ <ServicesSection />
+ <WorkflowVisualizer />
+ <ROICalculator />
+ <CustomVsGeneric />
+ <Process />
+ <DemoCenter />
+ <CaseStudiesPreview />
+ <DemoVideos />
+ <ReadinessQuiz />
+ <SecurityPrivacy />
+ <WhyWorkWithMeSection />
+ <ArticlesPreview />
+ <Testimonials />
+ <CTA />
+ </>
+ );
 }

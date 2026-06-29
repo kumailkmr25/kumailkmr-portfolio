@@ -6,6 +6,19 @@
   --color-primary-light: var(--primary-light);
   --color-primary-bg: var(--primary-bg);
   --color-primary-border: var(--primary-border);
+
+  /* Fluid Typography Scale */
+  --text-xs: clamp(0.7rem, 0.65rem + 0.25vw, 0.75rem);
+  --text-sm: clamp(0.8rem, 0.75rem + 0.25vw, 0.875rem);
+  --text-base: clamp(0.95rem, 0.9rem + 0.25vw, 1.05rem);
+  --text-lg: clamp(1.05rem, 1rem + 0.25vw, 1.125rem);
+  --text-xl: clamp(1.15rem, 1.1rem + 0.25vw, 1.25rem);
+  --text-2xl: clamp(1.3rem, 1.2rem + 0.5vw, 1.5rem);
+  --text-3xl: clamp(1.5rem, 1.3rem + 1vw, 1.875rem);
+  --text-4xl: clamp(1.75rem, 1.5rem + 1.2vw, 2.25rem);
+  --text-5xl: clamp(2rem, 1.7rem + 1.5vw, 3rem);
+  --text-6xl: clamp(2.5rem, 2rem + 2vw, 3.75rem);
+  --text-7xl: clamp(3rem, 2.2rem + 3vw, 4.5rem);
 }
 /* ─── CSS Custom Properties ─────────────────────────────────────────────── */
 :root {
@@ -134,7 +147,7 @@ h1, h2, h3, h4, h5, h6 {
 
 /* ─── Typography ─────────────────────────────────────────────────────────── */
 .heading-xl {
-  font-size: clamp(2.4rem, 5vw, 4rem);
+  font-size: clamp(2.2rem, 2rem + 4vw, 4.5rem);
   font-weight: 700;
   letter-spacing: -0.03em;
   line-height: 1.1;
@@ -142,7 +155,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .heading-lg {
-  font-size: clamp(1.875rem, 3.5vw, 3rem);
+  font-size: clamp(1.75rem, 1.5rem + 3vw, 3.5rem);
   font-weight: 700;
   letter-spacing: -0.025em;
   line-height: 1.15;
@@ -150,7 +163,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .heading-md {
-  font-size: clamp(1.5rem, 2.5vw, 2.25rem);
+  font-size: clamp(1.4rem, 1.2rem + 2vw, 2.5rem);
   font-weight: 700;
   letter-spacing: -0.02em;
   line-height: 1.2;
@@ -181,9 +194,9 @@ h1, h2, h3, h4, h5, h6 {
 .premium-card {
   background-color: var(--card);
   border: 1px solid var(--border);
-  border-radius: 1rem;
+  border-radius: 1.25rem;
   box-shadow: var(--shadow-sm), inset 0 1px 0 rgba(255, 255, 255, 0.1);
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
   position: relative;
   overflow: hidden;
 }
@@ -192,9 +205,9 @@ h1, h2, h3, h4, h5, h6 {
   content: "";
   position: absolute;
   inset: 0;
-  background: radial-gradient(800px circle at var(--mouse-x, 50%) var(--mouse-y, 50%), rgba(255,255,255,0.06), transparent 40%);
+  background: radial-gradient(800px circle at var(--mouse-x, 50%) var(--mouse-y, 50%), rgba(255,255,255,0.08), transparent 40%);
   opacity: 0;
-  transition: opacity 0.3s ease;
+  transition: opacity 0.5s ease;
   pointer-events: none;
   z-index: 1;
 }
@@ -206,23 +219,23 @@ h1, h2, h3, h4, h5, h6 {
 .premium-card:hover {
   box-shadow: var(--shadow-xl), inset 0 1px 0 rgba(255, 255, 255, 0.2);
   border-color: var(--border-strong);
-  transform: translateY(-4px);
+  transform: translateY(-4px) scale(1.01);
 }
 
 .glass-card {
-  background: rgba(255, 255, 255, 0.6);
+  background: rgba(255, 255, 255, 0.7);
   backdrop-filter: blur(40px);
   -webkit-backdrop-filter: blur(40px);
   border: 1px solid rgba(255, 255, 255, 0.8);
-  border-radius: 1rem;
-  box-shadow: var(--shadow-lg), inset 0 1px 0 rgba(255, 255, 255, 0.5);
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  border-radius: 1.25rem;
+  box-shadow: var(--shadow-lg), inset 0 1px 0 rgba(255, 255, 255, 0.6);
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .dark .glass-card {
-  background: rgba(10, 10, 10, 0.6);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  box-shadow: var(--shadow-lg), inset 0 1px 0 rgba(255, 255, 255, 0.05);
+  background: rgba(10, 10, 10, 0.7);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  box-shadow: var(--shadow-lg), inset 0 1px 0 rgba(255, 255, 255, 0.1);
 }
 
 /* ─── Badges ─────────────────────────────────────────────────────────────── */

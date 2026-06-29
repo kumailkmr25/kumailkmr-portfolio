@@ -28,7 +28,7 @@ export function SectionHeading({
       )}
       <h2
         className={cn(
-          "text-3xl md:text-4xl font-bold tracking-tight",
+          "heading-md",
           light ? "text-white" : "text-[#09090b] dark:text-white"
         )}
         style={{ fontFamily: "var(--font-sora), sans-serif" }}

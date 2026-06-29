@@ -7,11 +7,14 @@ import { ThemeProvider } from "@/components/layout/ThemeProvider";
 import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
 import { MobileBottomNav } from "@/components/layout/MobileBottomNav";
-import { WhatsAppButton } from "@/components/shared/WhatsAppButton";
 import { VisitorExperienceProvider } from "@/components/experience/VisitorExperienceContext";
 import { IntroAnimation } from "@/components/experience/IntroAnimation";
 import { NotificationCenter } from "@/components/experience/NotificationCenter";
 import { WelcomeBanner } from "@/components/experience/WelcomeBanner";
+import { StickyMobileCTA } from "@/components/layout/StickyMobileCTA";
+import { FloatingDesktopCTA } from "@/components/layout/FloatingDesktopCTA";
+import { SmartSectionNav } from "@/components/layout/SmartSectionNav";
+import { AIAssistantWidget } from "@/components/experience/AIAssistantWidget";
 
 const jakarta = Plus_Jakarta_Sans({
   variable: "--font-jakarta",
@@ -67,7 +70,10 @@ export default function RootLayout({
             <main className="flex-1 pt-20 pb-16 md:pb-0">{children}</main>
             <Footer />
             <MobileBottomNav />
-            <WhatsAppButton />
+            <StickyMobileCTA />
+            <FloatingDesktopCTA />
+            <SmartSectionNav />
+            <AIAssistantWidget />
             <NotificationCenter />
             <Toaster position="top-center" />
           </VisitorExperienceProvider>
